@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Entrenamiento Personalizado</title>
   <link rel="icon" href="favicon.ico" />
   <style>
@@ -11,30 +11,24 @@
       font-family: Arial, sans-serif;
       padding: 20px;
     }
-    h2, h3 {
+    h2 {
       text-align: center;
+      margin-bottom: 20px;
+    }
+    select, button {
+      display: block;
+      margin: 15px auto;
+      padding: 10px;
+      font-size: 16px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
     }
     .plan {
-      background-color: #1e1e1e;
+      background-color: #1f1f1f;
       padding: 20px;
-      margin: 20px auto;
       border-radius: 15px;
-      max-width: 800px;
-      box-shadow: 0 0 10px #00ffcc66;
-    }
-    button {
-      display: block;
-      margin: 30px auto;
-      padding: 12px 24px;
-      font-size: 16px;
-      background-color: #00ffcc;
-      color: #121212;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #00ccb3;
+      margin-top: 20px;
     }
     .footer {
       margin-top: 40px;
@@ -42,74 +36,99 @@
       font-size: 0.9em;
       color: #aaa;
     }
+    button {
+      background-color: #00ffcc;
+      color: #121212;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00ccb3;
+    }
   </style>
 </head>
 <body>
 
-  <h2>Plan de Entrenamiento Personalizado</h2>
+  <h2>Entrenamiento Personalizado</h2>
 
-  <div class="plan" id="entrenamientoInfo">
-    Cargando plan personalizado...
-  </div>
+  <label for="deporte">Selecciona tu deporte:</label>
+  <select id="deporte" onchange="actualizarDisciplinas()">
+    <option value="">-- Selecciona --</option>
+    <option value="mtb">MTB</option>
+    <option value="gimnasio">Gimnasio</option>
+    <option value="yoga">Yoga</option>
+    <option value="atletismo">Atletismo</option>
+    <option value="natacion">Natación</option>
+    <option value="sedentario">Sedentario</option>
+  </select>
 
-  <button onclick="volver()">🔙 Volver al Menú</button>
+  <label for="disciplina">Selecciona tu disciplina:</label>
+  <select id="disciplina">
+    <option value="">-- Selecciona un deporte primero --</option>
+  </select>
+
+  <button onclick="mostrarPlan()">Mostrar Entrenamiento</button>
+
+  <div id="resultado" class="plan"></div>
 
   <div class="footer">By: Juan Pablo Cruz</div>
 
   <script>
-    const imc = localStorage.getItem("imc");
-    const cuerpo = localStorage.getItem("tipoCuerpo");
-    const deporte = localStorage.getItem("deporte");
-    const disciplina = localStorage.getItem("disciplina");
+    const disciplinas = {
+      mtb: ["Cross Country", "Enduro", "Downhill"],
+      gimnasio: ["Hipertrofia", "Resistencia", "Fuerza"],
+      yoga: ["Hatha", "Vinyasa", "Ashtanga"],
+      atletismo: ["Velocidad", "Fondo", "Lanzamiento"],
+      natacion: ["Estilo Libre", "Pecho", "Espalda"],
+      sedentario: ["Movilidad", "Cardio Suave", "Estiramientos"]
+    };
 
-    const entrenamientoDiv = document.getElementById("entrenamientoInfo");
+    function actualizarDisciplinas() {
+      const deporte = document.getElementById("deporte").value;
+      const disciplinaSelect = document.getElementById("disciplina");
+      disciplinaSelect.innerHTML = "";
 
-    function generarEntrenamiento(imc, cuerpo, deporte, disciplina) {
-      // Aquí deberías insertar los entrenamientos personalizados según combinación
-      // Ejemplo demostrativo:
-
-      if (deporte === "MTB") {
-        if (disciplina === "XC" && imc === "Sobrepeso") {
-          return `
-            <h3>MTB - Cross Country (XC)</h3>
-            <p><strong>Tipo de cuerpo:</strong> ${cuerpo}</p>
-            <ul>
-              <li>30 minutos de pedaleo en terreno plano (quema grasa)</li>
-              <li>Interválicos cortos: 5x 2 minutos fuerte + 3 minutos suave</li>
-              <li>Fuerza general: sentadillas, core y estiramientos</li>
-              <li>Día de técnica: curva y frenado progresivo</li>
-              <li>Rutina complementaria de bajo impacto</li>
-            </ul>
-          `;
-        } else if (disciplina === "Downhill" && imc === "Bajo peso") {
-          return `
-            <h3>MTB - Downhill</h3>
-            <p><strong>Tipo de cuerpo:</strong> ${cuerpo}</p>
-            <ul>
-              <li>Sesiones de salto técnico y control en descenso</li>
-              <li>Trabajo de fuerza máxima en tren inferior</li>
-              <li>Entrenamiento de velocidad con intervalos cortos</li>
-              <li>Core y hombros para control de bicicleta</li>
-              <li>Consumo calórico elevado, reforzar alimentación</li>
-            </ul>
-          `;
-        }
+      if (disciplinas[deporte]) {
+        disciplinas[deporte].forEach(d => {
+          const option = document.createElement("option");
+          option.value = d.toLowerCase().replace(/ /g, "_");
+          option.textContent = d;
+          disciplinaSelect.appendChild(option);
+        });
+      } else {
+        const defaultOption = document.createElement("option");
+        defaultOption.textContent = "-- Selecciona un deporte primero --";
+        disciplinaSelect.appendChild(defaultOption);
       }
-
-      // Puedes añadir combinaciones para gimnasio, natación, atletismo, yoga, etc.
-
-      return `
-        <h3>${deporte} - ${disciplina}</h3>
-        <p><strong>Tipo de cuerpo:</strong> ${cuerpo}</p>
-        <p>Tu plan personalizado aparecerá pronto aquí.</p>
-        <p>Estamos ajustando según IMC: <strong>${imc}</strong></p>
-      `;
     }
 
-    entrenamientoDiv.innerHTML = generarEntrenamiento(imc, cuerpo, deporte, disciplina);
+    function mostrarPlan() {
+      const deporte = document.getElementById("deporte").value;
+      const disciplina = document.getElementById("disciplina").value;
+      const imc = localStorage.getItem("imc");
+      const tipoCuerpo = localStorage.getItem("tipoCuerpo");
 
-    function volver() {
-      window.location.href = "menu.html";
+      const resultado = document.getElementById("resultado");
+
+      if (!deporte || !disciplina || !imc || !tipoCuerpo) {
+        resultado.innerHTML = "<p>Por favor, completa todos los datos antes de continuar.</p>";
+        return;
+      }
+
+      resultado.innerHTML = `
+        <h3>Plan para ${deporte.toUpperCase()} - ${disciplina.replace(/_/g, ' ')}</h3>
+        <p><strong>IMC:</strong> ${imc} | <strong>Tipo de cuerpo:</strong> ${tipoCuerpo}</p>
+        <ul>
+          <li>Entrenamiento 1: Calentamiento dinámico adaptado</li>
+          <li>Entrenamiento 2: Técnica específica de ${disciplina}</li>
+          <li>Entrenamiento 3: Fortalecimiento según tipo de cuerpo (${tipoCuerpo})</li>
+          <li>Entrenamiento 4: Sesión aeróbica adaptada al IMC</li>
+          <li>Entrenamiento 5: Flexibilidad y movilidad</li>
+          <li>Entrenamiento 6: Descanso activo</li>
+          <li>Entrenamiento 7: Evaluación de progreso</li>
+        </ul>
+      `;
     }
   </script>
 
