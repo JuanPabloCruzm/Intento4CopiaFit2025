@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Plan de Entrenamiento</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plan de Entrenamiento - Mi FitApp</title>
+  <link rel="icon" href="favicon.ico" />
   <style>
     body {
       background-color: #121212;
@@ -11,74 +12,348 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
+      min-height: 100vh;
     }
     h1, h2 {
-      color: #fff;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
-    .day {
-      background-color: #1e1e1e;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      box-shadow: 0 0 10px #000;
-    }
-    footer {
-      margin-top: 40px;
       text-align: center;
-      font-size: 14px;
-      color: #ccc;
     }
-    a {
-      color: #90caf9;
-      text-decoration: none;
+    #subtitulo {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.2em;
+      color: #aaa;
+    }
+    .dia {
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #222;
+    }
+    .dia h3 {
+      margin-top: 0;
+      color: #4caf50;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 10px 25px;
+      font-size: 1.1em;
+      background-color: #222;
+      border: none;
+      border-radius: 5px;
+      color: #4caf50;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #444;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Tu Plan de Entrenamiento Personalizado</h1>
-    <h2>Deporte: MTB – Disciplina: Downhill</h2>
-    <h3>Tipo de cuerpo: Endomorfo – IMC: Sobrepeso</h3>
+  <h1>Plan de Entrenamiento</h1>
+  <h2 id="subtitulo">Cargando datos...</h2>
 
-    <div class="day">
-      <h3>Día 1</h3>
-      <p>Cardio ligero (20 min bici estática), movilidad articular, técnica en bajadas controladas, core 15 min.</p>
-    </div>
-    <div class="day">
-      <h3>Día 2</h3>
-      <p>Subidas cortas con técnica, estiramiento dinámico, fuerza piernas (sentadillas + zancadas sin peso).</p>
-    </div>
-    <div class="day">
-      <h3>Día 3</h3>
-      <p>Descanso activo: caminata 30 min, movilidad lumbar y caderas.</p>
-    </div>
-    <div class="day">
-      <h3>Día 4</h3>
-      <p>Entrenamiento técnico en bajadas + práctica frenado. Fuerza tren superior (flexiones + remo).</p>
-    </div>
-    <div class="day">
-      <h3>Día 5</h3>
-      <p>Sesión completa de MTB en terreno real (1h), hidratación y técnica de respiración.</p>
-    </div>
-    <div class="day">
-      <h3>Día 6</h3>
-      <p>Yoga de recuperación (45 min), enfoque en espalda baja y piernas. Foam roller.</p>
-    </div>
-    <div class="day">
-      <h3>Día 7</h3>
-      <p>Entrenamiento libre: recorrido suave + ejercicios de equilibrio en la bici.</p>
-    </div>
+  <div id="plan"></div>
 
-    <br>
-    <a href="deporte.html">← Volver al menú de selección</a>
+  <button id="volverMenu">Volver al Menú</button>
 
-    <footer>
-      <p>By: Juan Pablo Cruz • MiFitApp © 2025</p>
-    </footer>
-  </div>
+  <script>
+    // Recuperar datos del localStorage
+    const deporte = localStorage.getItem('deporte');
+    const disciplina = localStorage.getItem('disciplina') || localStorage.getItem('meta') || '';
+    const imc = localStorage.getItem('imc');
+    const tipoCuerpo = localStorage.getItem('cuerpo');
+    const tiempoEntreno = localStorage.getItem('tiempoEntreno'); // en horas semanales
+    const nombre = localStorage.getItem('nombre');
+
+    document.getElementById('subtitulo').textContent =
+      `Hola ${nombre}, este es tu plan de entrenamiento para ${deporte} (${disciplina}), con IMC: ${imc} y tipo de cuerpo: ${tipoCuerpo}.`;
+
+    // Definir planes de entrenamiento (simplificado, pero personalizable)
+    // Según deporte, disciplina, imc, tipo de cuerpo y tiempo semanal
+    // Para cada día se pone una lista de ejercicios o actividades
+
+    const planes = {
+      mtb: {
+        enduro: {
+          "1": [ // 1h o menos
+            ["Calentamiento: 10 min pedaleo suave", "Técnica: 15 min descenso controlado", "Estiramientos: 10 min"],
+            ["Entrenamiento de fuerza: 15 min sentadillas y flexiones", "Pedaleo: 30 min plano", "Estiramientos"],
+            ["Descanso activo: caminata 30 min", "Ejercicios de equilibrio 15 min"],
+            ["Subidas cortas 30 min", "Técnica: curvas 20 min", "Estiramientos"],
+            ["Entrenamiento core 20 min", "Pedaleo suave 20 min"],
+            ["Descanso", "Yoga o estiramientos 30 min"],
+            ["Salida larga 45 min ritmo moderado", "Estiramientos"]
+          ],
+          "3": [ // 1 a 3h
+            ["Calentamiento 15 min", "Descenso técnico 30 min", "Estiramientos 15 min"],
+            ["Entrenamiento fuerza 30 min", "Subidas intensas 45 min", "Core 15 min"],
+            ["Descanso activo: natación o caminata 45 min", "Equilibrio y estabilidad 20 min"],
+            ["Técnica y control de bicicleta 1h", "Estiramientos 20 min"],
+            ["Entrenamiento pliométrico 30 min", "Pedaleo 45 min"],
+            ["Descanso activo con yoga 1h"],
+            ["Salida larga 2h, ritmo variable", "Estiramientos"]
+          ],
+          "6": [ // 3 a 6h
+            ["Calentamiento 20 min", "Entrenamiento técnico 1h", "Fuerza 40 min", "Estiramientos"],
+            ["Subidas largas 1.5h", "Core y equilibrio 30 min", "Estiramientos"],
+            ["Descanso activo: natación 1h", "Yoga 30 min"],
+            ["Descenso técnico 1h", "Entrenamiento pliométrico 40 min"],
+            ["Pedaleo de resistencia 2h", "Estiramientos"],
+            ["Entrenamiento de fuerza 1h", "Yoga 45 min"],
+            ["Salida larga 3h ritmo variable", "Estiramientos"]
+          ],
+          "12": [ // 6 a 12h
+            ["Calentamiento 30 min", "Técnica avanzada 2h", "Fuerza 1h", "Estiramientos"],
+            ["Subidas largas 3h", "Core 1h", "Estiramientos"],
+            ["Descanso activo: natación 1.5h", "Yoga 1h"],
+            ["Descenso técnico avanzado 2h", "Entrenamiento pliométrico 1h"],
+            ["Pedaleo resistencia 3h", "Estiramientos"],
+            ["Fuerza y resistencia 1.5h", "Yoga 1h"],
+            ["Salida larga 4h ritmo variable", "Estiramientos"]
+          ]
+        },
+        xc: {
+          // Similar estructura con ajustes para XC
+          "1": [
+            ["Calentamiento 10 min", "Pedaleo suave 30 min", "Estiramientos 10 min"],
+            ["Entrenamiento fuerza 15 min", "Subidas cortas 30 min", "Estiramientos"],
+            ["Descanso activo: caminata 30 min", "Equilibrio 15 min"],
+            ["Técnica pedaleo 30 min", "Sprint 10x20 seg", "Estiramientos"],
+            ["Core 20 min", "Pedaleo 20 min"],
+            ["Descanso activo yoga 30 min"],
+            ["Salida larga 45 min", "Estiramientos"]
+          ],
+          // Otros tiempos y disciplinas similares...
+          "3": [/*...*/],
+          "6": [/*...*/],
+          "12": [/*...*/]
+        },
+        dh: {
+          "1": [
+            ["Calentamiento 10 min", "Técnica de descenso 30 min", "Estiramientos"],
+            ["Entrenamiento fuerza 20 min", "Pedaleo suave 20 min", "Estiramientos"],
+            ["Descanso activo: caminata 30 min"],
+            ["Práctica de curvas y saltos 30 min", "Estiramientos"],
+            ["Core y estabilidad 20 min", "Pedaleo 15 min"],
+            ["Descanso activo con yoga 30 min"],
+            ["Salida de descenso 45 min", "Estiramientos"]
+          ],
+          // Agrega más niveles si quieres
+        },
+        allmountain: {
+          // Puedes crear planes similares
+        }
+      },
+      gimnasio: {
+        fuerza: {
+          "1": [
+            ["Calentamiento 10 min cardio", "Circuito fuerza 30 min (pesas básicas)", "Estiramientos 10 min"],
+            ["Entrenamiento de piernas 30 min", "Core 15 min"],
+            ["Descanso activo 30 min caminata"],
+            ["Circuito fuerza 40 min", "Estiramientos"],
+            ["Entrenamiento de brazos y espalda 30 min", "Core 20 min"],
+            ["Yoga o estiramientos 30 min"],
+            ["Sesión de fuerza completa 1h"]
+          ],
+          "3": [
+            ["Calentamiento 15 min", "Fuerza máxima 45 min", "Estiramientos 15 min"],
+            ["Piernas y core 1h", "Cardio suave 20 min"],
+            ["Descanso activo o natación 45 min"],
+            ["Entrenamiento de fuerza con pesas 1h", "Estiramientos"],
+            ["Circuito de alta intensidad 45 min", "Core 30 min"],
+            ["Yoga 1h"],
+            ["Sesión completa fuerza y resistencia 1.5h"]
+          ],
+          "6": [
+            ["Calentamiento 20 min", "Fuerza máxima 1h", "Estiramientos 20 min"],
+            ["Piernas intensas 1.5h", "Core y estabilidad 30 min"],
+            ["Descanso activo o natación 1h"],
+            ["Entrenamiento de fuerza avanzada 1h", "Estiramientos"],
+            ["Circuito pliométrico 1h", "Core 45 min"],
+            ["Yoga 1h"],
+            ["Sesión larga fuerza y resistencia 2h"]
+          ],
+          "12": [
+            ["Calentamiento 30 min", "Fuerza máxima 1.5h", "Estiramientos 30 min"],
+            ["Piernas y core 2h", "Cardio 1h"],
+            ["Descanso activo o natación 1.5h"],
+            ["Fuerza avanzada y pliometría 1.5h", "Estiramientos"],
+            ["Circuito HIIT 1.5h", "Core 1h"],
+            ["Yoga 1.5h"],
+            ["Sesión larga de fuerza y resistencia 3h"]
+          ]
+        },
+        resistencia: {
+          // Plan similar ajustado a resistencia
+        },
+        estetica: {
+          // Plan similar para estética
+        }
+      },
+      yoga: {
+        general: {
+          "1": [
+            ["Calentamiento con respiración 10 min", "Posturas básicas 30 min", "Meditación 10 min"],
+            ["Posturas para flexibilidad 40 min", "Estiramientos 15 min"],
+            ["Descanso activo: caminata suave 30 min"],
+            ["Posturas para fuerza 30 min", "Respiración y relajación 20 min"],
+            ["Yoga suave 40 min", "Meditación 10 min"],
+            ["Descanso activo: estiramientos 30 min"],
+            ["Secuencia completa 1h"]
+          ],
+          "3": [
+            ["Calentamiento 15 min", "Posturas intermedias 45 min", "Meditación 15 min"],
+            ["Posturas para fuerza 1h", "Estiramientos 20 min"],
+            ["Descanso activo 45 min"],
+            ["Posturas avanzadas 1h", "Relajación 20 min"],
+            ["Yoga dinámico 1h", "Meditación 20 min"],
+            ["Descanso activo 1h"],
+            ["Práctica completa 1.5h"]
+          ],
+          // Más niveles...
+        }
+      },
+      atletismo: {
+        pista: {
+          "1": [
+            ["Calentamiento 10 min trote suave", "Ejercicios de técnica 20 min", "Estiramientos 15 min"],
+            ["Entrenamiento de velocidad 30 min", "Descanso activo 15 min"],
+            ["Caminata 30 min", "Ejercicios de fuerza 15 min"],
+            ["Series cortas 30 min", "Estiramientos"],
+            ["Resistencia 20 min", "Trote suave 20 min"],
+            ["Descanso activo yoga 30 min"],
+            ["Entrenamiento combinado 45 min"]
+          ],
+          // Más disciplinas y niveles...
+        },
+        carrera: {
+          // Planes similares
+        }
+      },
+      natacion: {
+        estilo_libre: {
+          "1": [
+            ["Calentamiento 10 min", "Nado suave 20 min", "Estiramientos 10 min"],
+            ["Técnica 20 min", "Nado moderado 20 min"],
+            ["Descanso activo caminata 30 min"],
+            ["Intervalos de velocidad 30 min", "Estiramientos"],
+            ["Resistencia 25 min", "Relajación 15 min"],
+            ["Yoga 30 min"],
+            ["Nado largo 45 min"]
+          ],
+          // Más disciplinas y niveles...
+        }
+      },
+      rugby: {
+        general: {
+          "1": [
+            ["Calentamiento 15 min", "Técnica básica 30 min", "Estiramientos 15 min"],
+            ["Entrenamiento de fuerza 30 min", "Cardio 15 min"],
+            ["Descanso activo 30 min"],
+            ["Entrenamiento de velocidad 30 min", "Tácticas 20 min"],
+            ["Entrenamiento de resistencia 30 min", "Estiramientos"],
+            ["Yoga o descanso activo 30 min"],
+            ["Sesión combinada 1h"]
+          ]
+          // Más niveles si quieres
+        }
+      },
+      futbol: {
+        arquero: {
+          "1": [
+            ["Calentamiento 15 min", "Entrenamiento de reflejos 30 min", "Estiramientos 15 min"],
+            ["Técnica de atajadas 30 min", "Cardio 20 min"],
+            ["Descanso activo 30 min"],
+            ["Entrenamiento de fuerza 30 min", "Tácticas de portero 20 min"],
+            ["Entrenamiento de agilidad 30 min", "Estiramientos"],
+            ["Yoga 30 min"],
+            ["Sesión combinada 1h"]
+          ]
+          // Más niveles...
+        },
+        delantero: {
+          "1": [
+            ["Calentamiento 15 min", "Técnica de tiro 30 min", "Estiramientos 15 min"],
+            ["Sprint y velocidad 30 min", "Juego reducido 20 min"],
+            ["Descanso activo 30 min"],
+            ["Fuerza y agilidad 30 min", "Tácticas ofensivas 20 min"],
+            ["Entrenamiento de resistencia 30 min", "Estiramientos"],
+            ["Yoga 30 min"],
+            ["Partido o práctica 1h"]
+          ]
+          // Más niveles...
+        }
+      },
+      sedentario: {
+        general: {
+          "1": [
+            ["Caminata ligera 30 min", "Estiramientos 15 min"],
+            ["Ejercicios de movilidad 20 min", "Respiración y relajación 10 min"],
+            ["Descanso activo 30 min"],
+            ["Estiramientos y flexibilidad 30 min"],
+            ["Caminata o bicicleta suave 30 min", "Ejercicios de fuerza ligera 20 min"],
+            ["Yoga 30 min"],
+            ["Actividad ligera 45 min"]
+          ]
+          // Más niveles...
+        }
+      }
+    };
+
+    // Elegir plan según variables
+    // Para simplificar, asigno tiempoEntreno en rangos:
+    // <=1 hora => "1"
+    // >1 y <=3 => "3"
+    // >3 y <=6 => "6"
+    // >6 => "12"
+
+    let tiempoKey = "1";
+    const tiempoNum = parseFloat(tiempoEntreno);
+    if (tiempoNum > 6) tiempoKey = "12";
+    else if (tiempoNum > 3) tiempoKey = "6";
+    else if (tiempoNum > 1) tiempoKey = "3";
+
+    // Para gimnasio y yoga, usar meta o general
+    let planDisciplina = disciplina.toLowerCase().replace(/\s+/g, '');
+    if (deporte === 'gimnasio') planDisciplina = localStorage.getItem('meta')?.toLowerCase() || 'fuerza';
+    if (deporte === 'yoga') planDisciplina = 'general';
+    if (deporte === 'rugby') planDisciplina = 'general';
+    if (deporte === 'sedentario') planDisciplina = 'general';
+
+    // Obtener plan
+    let planEntreno;
+    if (planes[deporte] && planes[deporte][planDisciplina]) {
+      planEntreno = planes[deporte][planDisciplina][tiempoKey];
+    }
+
+    const planDiv = document.getElementById('plan');
+    planDiv.innerHTML = '';
+
+    if (planEntreno) {
+      for (let i = 0; i < 7; i++) {
+        const dia = document.createElement('div');
+        dia.className = 'dia';
+        dia.innerHTML = `<h3>Día ${i + 1}</h3><ul>`;
+        planEntreno[i].forEach(ejercicio => {
+          dia.innerHTML += `<li>${ejercicio}</li>`;
+        });
+        dia.innerHTML += '</ul>';
+        planDiv.appendChild(dia);
+      }
+    } else {
+      planDiv.innerHTML = '<p>No hay un plan definido para tu combinación actual. Lo agregaremos pronto.</p>';
+    }
+
+    // Botón volver al menú
+    document.getElementById('volverMenu').addEventListener('click', () => {
+      window.location.href = 'menu.html'; // Ajusta según ruta real
+    });
+  </script>
 </body>
 </html>
