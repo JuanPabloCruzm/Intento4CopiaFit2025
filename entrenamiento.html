@@ -11,26 +11,30 @@
       font-family: Arial, sans-serif;
       padding: 20px;
     }
-    h2 {
+    h2, h3 {
       text-align: center;
     }
-    .rutina {
+    .plan {
       background-color: #1e1e1e;
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 15px 0;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0 0 10px #00ffcc66;
     }
-    .volver {
+    button {
       display: block;
       margin: 30px auto;
-      padding: 10px 20px;
+      padding: 12px 24px;
+      font-size: 16px;
       background-color: #00ffcc;
       color: #121212;
       border: none;
-      font-weight: bold;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
+    }
+    button:hover {
+      background-color: #00ccb3;
     }
     .footer {
       margin-top: 40px;
@@ -42,138 +46,71 @@
 </head>
 <body>
 
-  <h2>Entrenamiento personalizado</h2>
+  <h2>Plan de Entrenamiento Personalizado</h2>
 
-  <div id="rutinas"></div>
+  <div class="plan" id="entrenamientoInfo">
+    Cargando plan personalizado...
+  </div>
 
-  <button class="volver" onclick="window.location.href='menu.html'">⬅ Volver al Menú</button>
+  <button onclick="volver()">🔙 Volver al Menú</button>
 
   <div class="footer">By: Juan Pablo Cruz</div>
 
   <script>
-    const imc = localStorage.getItem("imcCategoria");
+    const imc = localStorage.getItem("imc");
     const cuerpo = localStorage.getItem("tipoCuerpo");
     const deporte = localStorage.getItem("deporte");
     const disciplina = localStorage.getItem("disciplina");
 
-    const rutinas = {
-      "MTB": {
-        "XC": {
-          "bajo": "Rutina de resistencia + técnica en subidas (intervalos largos, fuerza de piernas).",
-          "normal": "Rodajes largos + técnica de manejo + core para estabilidad.",
-          "sobrepeso": "Cardio progresivo en llano + fortalecimiento de tren inferior bajo impacto."
-        },
-        "Enduro": {
-          "bajo": "Fuerza explosiva en gimnasio + descensos técnicos suaves.",
-          "normal": "Técnica en bajadas + fuerza en piernas y brazos + HIIT.",
-          "sobrepeso": "Entrenamientos de equilibrio + movilidad + tramos controlados cuesta abajo."
-        },
-        "Downhill": {
-          "bajo": "Ejercicios de coordinación y core + simulaciones con protección.",
-          "normal": "Descensos cronometrados + pliometría + fuerza central.",
-          "sobrepeso": "Movilidad articular + práctica en tramos suaves + zona media."
-        }
-      },
-      "Gimnasio": {
-        "Hipertrofia": {
-          "bajo": "Rutina dividida de volumen (pesas pesadas, pocas reps) + proteína.",
-          "normal": "Rutina equilibrada con peso moderado, 4-5 días por semana.",
-          "sobrepeso": "Circuitos metabólicos + cardio moderado + pesas funcionales."
-        },
-        "Fuerza": {
-          "bajo": "Ejercicios compuestos 5x5 + alimentación densa.",
-          "normal": "Sentadillas, peso muerto, banca + técnica + progresión.",
-          "sobrepeso": "Trabajo técnico con descanso amplio + movilidad y control de peso."
-        },
-        "Funcional": {
-          "bajo": "Entrenamientos con peso corporal + estabilidad.",
-          "normal": "WODs tipo CrossFit moderados + coordinación.",
-          "sobrepeso": "TRX, bandas elásticas, cardio suave + movilidad activa."
-        }
-      },
-      "Yoga": {
-        "Hatha": {
-          "bajo": "Secuencias suaves, énfasis en respiración y elongación.",
-          "normal": "Asanas con retención + meditación y equilibrio.",
-          "sobrepeso": "Posturas accesibles + estiramiento + respiración consciente."
-        },
-        "Vinyasa": {
-          "bajo": "Flujos lentos + fuerza de brazos básica.",
-          "normal": "Rutinas dinámicas con control postural.",
-          "sobrepeso": "Movimientos conscientes + ajustes de posturas según movilidad."
-        },
-        "Restaurativo": {
-          "bajo": "Yoga nidra + recuperación muscular.",
-          "normal": "Sesiones relajantes con props y soporte.",
-          "sobrepeso": "Rutinas en suelo + alivio de tensión y estrés corporal."
-        }
-      },
-      "Atletismo": {
-        "Velocidad": {
-          "bajo": "Salidas explosivas + técnica de braceo.",
-          "normal": "Sprint + pliometría + fuerza específica.",
-          "sobrepeso": "Arranques suaves + técnica + fortalecimiento sin impacto."
-        },
-        "Resistencia": {
-          "bajo": "Rodajes largos suaves + progresión controlada.",
-          "normal": "Intervalos + técnica de zancada + volumen.",
-          "sobrepeso": "Caminatas rápidas + trote suave + control articular."
-        },
-        "Saltos": {
-          "bajo": "Fuerza básica en piernas + pliometría progresiva.",
-          "normal": "Saltos con carga + movilidad + técnica.",
-          "sobrepeso": "Estabilidad + técnica en seco + movilidad previa."
-        }
-      },
-      "Natación": {
-        "Estilo Libre": {
-          "bajo": "Trabajo de técnica + series suaves.",
-          "normal": "Series variadas con énfasis en velocidad y técnica.",
-          "sobrepeso": "Trabajo constante + apoyo en tabla + respiración."
-        },
-        "Pecho": {
-          "bajo": "Coordinación brazos/piernas + técnica lenta.",
-          "normal": "Series medias con control + core activo.",
-          "sobrepeso": "Ejercicios con poco impacto + flotación guiada."
-        },
-        "Espalda": {
-          "bajo": "Series de flotación dorsal + técnica con tabla.",
-          "normal": "Entrenamiento de ritmo y giro.",
-          "sobrepeso": "Trabajo suave con patada y alineación postural."
-        }
-      },
-      "Sedentario": {
-        "Ligero": {
-          "bajo": "Caminatas + pausas activas + movilidad articular.",
-          "normal": "Pausas activas + yoga básico + rutinas guiadas.",
-          "sobrepeso": "Movilidad suave en casa + ejercicios de bajo impacto sentado."
-        },
-        "Moderado": {
-          "bajo": "Bicicleta estática + ejercicios con bandas.",
-          "normal": "Cardio suave + movilidad completa.",
-          "sobrepeso": "Ejercicios respiratorios + movilidad asistida + estiramiento."
-        },
-        "Rehabilitación": {
-          "bajo": "Rutina guiada médica + elongación y tonificación.",
-          "normal": "Ejercicios suaves funcionales.",
-          "sobrepeso": "Movimientos asistidos + supervisión médica."
+    const entrenamientoDiv = document.getElementById("entrenamientoInfo");
+
+    function generarEntrenamiento(imc, cuerpo, deporte, disciplina) {
+      // Aquí deberías insertar los entrenamientos personalizados según combinación
+      // Ejemplo demostrativo:
+
+      if (deporte === "MTB") {
+        if (disciplina === "XC" && imc === "Sobrepeso") {
+          return `
+            <h3>MTB - Cross Country (XC)</h3>
+            <p><strong>Tipo de cuerpo:</strong> ${cuerpo}</p>
+            <ul>
+              <li>30 minutos de pedaleo en terreno plano (quema grasa)</li>
+              <li>Interválicos cortos: 5x 2 minutos fuerte + 3 minutos suave</li>
+              <li>Fuerza general: sentadillas, core y estiramientos</li>
+              <li>Día de técnica: curva y frenado progresivo</li>
+              <li>Rutina complementaria de bajo impacto</li>
+            </ul>
+          `;
+        } else if (disciplina === "Downhill" && imc === "Bajo peso") {
+          return `
+            <h3>MTB - Downhill</h3>
+            <p><strong>Tipo de cuerpo:</strong> ${cuerpo}</p>
+            <ul>
+              <li>Sesiones de salto técnico y control en descenso</li>
+              <li>Trabajo de fuerza máxima en tren inferior</li>
+              <li>Entrenamiento de velocidad con intervalos cortos</li>
+              <li>Core y hombros para control de bicicleta</li>
+              <li>Consumo calórico elevado, reforzar alimentación</li>
+            </ul>
+          `;
         }
       }
-    };
 
-    function mostrarRutina() {
-      const contenedor = document.getElementById("rutinas");
-      const categoria = imc === "Bajo peso" ? "bajo" : imc === "Sobrepeso" ? "sobrepeso" : "normal";
+      // Puedes añadir combinaciones para gimnasio, natación, atletismo, yoga, etc.
 
-      try {
-        const texto = rutinas[deporte][disciplina][categoria];
-        contenedor.innerHTML = `<div class="rutina"><strong>${deporte} - ${disciplina} (${imc} / ${cuerpo}):</strong><br>${texto}</div>`;
-      } catch (e) {
-        contenedor.innerHTML = "<div class='rutina'>No se encontró una rutina para esta combinación.</div>";
-      }
+      return `
+        <h3>${deporte} - ${disciplina}</h3>
+        <p><strong>Tipo de cuerpo:</strong> ${cuerpo}</p>
+        <p>Tu plan personalizado aparecerá pronto aquí.</p>
+        <p>Estamos ajustando según IMC: <strong>${imc}</strong></p>
+      `;
     }
 
-    mostrarRutina();
+    entrenamientoDiv.innerHTML = generarEntrenamiento(imc, cuerpo, deporte, disciplina);
+
+    function volver() {
+      window.location.href = "menu.html";
+    }
   </script>
 
 </body>
