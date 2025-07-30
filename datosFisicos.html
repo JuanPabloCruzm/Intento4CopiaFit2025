@@ -10,26 +10,24 @@
       color: #eee;
       font-family: Arial, sans-serif;
       padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
     }
     h1 {
       text-align: center;
     }
-    label {
-      display: block;
-      margin: 12px 0 4px;
+    label, p {
+      margin-top: 20px;
     }
-    input, select {
+    input[type=number] {
       width: 100%;
       padding: 8px;
       border-radius: 6px;
       border: none;
       margin-bottom: 10px;
-    }
-    .definition {
-      font-size: 0.9em;
-      color: #bbb;
-      margin-top: -8px;
-      margin-bottom: 15px;
+      background-color: #222;
+      color: #eee;
+      font-size: 1em;
     }
     button {
       display: block;
@@ -39,7 +37,7 @@
       padding: 10px;
       border: none;
       border-radius: 8px;
-      margin-top: 20px;
+      margin-top: 30px;
       font-size: 1.1em;
       cursor: pointer;
     }
@@ -48,6 +46,53 @@
       margin-top: 30px;
       font-size: 0.8em;
       color: #aaa;
+    }
+
+    /* Contenedor de tipos de cuerpo */
+    .tipos-cuerpo {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .tipo-card {
+      flex: 1 1 30%;
+      background-color: #222;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    .tipo-card:hover {
+      background-color: #333;
+    }
+    .tipo-card.selected {
+      border-color: #4CAF50;
+      background-color: #2a5d2a;
+    }
+    .tipo-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    .tipo-card p {
+      font-size: 0.9em;
+      color: #ccc;
+      text-align: center;
+    }
+
+    /* Definicion larga */
+    #definicion-larga {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #222;
+      border-radius: 8px;
+      font-size: 0.95em;
+      line-height: 1.4;
+      min-height: 80px;
+      color: #ddd;
     }
   </style>
 </head>
@@ -66,15 +111,25 @@
     <label for="altura">Altura (m): <small>Ej: 1.75</small></label>
     <input type="number" id="altura" name="altura" required step="0.01" min="1">
 
-    <label for="cuerpo">Tipo de cuerpo:</label>
-    <select id="cuerpo" name="cuerpo" required>
-      <option value="">Seleccione</option>
-      <option value="endomorfo">Endomorfo</option>
-      <option value="mesomorfo">Mesomorfo</option>
-      <option value="ectomorfo">Ectomorfo</option>
-    </select>
+    <label>Tipo de cuerpo:</label>
+    <div class="tipos-cuerpo">
+      <div class="tipo-card" data-tipo="endomorfo" tabindex="0">
+        <h3>Endomorfo</h3>
+        <p>Tendencia a acumular grasa</p>
+      </div>
+      <div class="tipo-card" data-tipo="mesomorfo" tabindex="0">
+        <h3>Mesomorfo</h3>
+        <p>Cuerpo musculoso y atlético</p>
+      </div>
+      <div class="tipo-card" data-tipo="ectomorfo" tabindex="0">
+        <h3>Ectomorfo</h3>
+        <p>Delgado, metabolismo rápido</p>
+      </div>
+    </div>
 
-    <div id="definicion" class="definition"></div>
+    <div id="definicion-larga">Selecciona un tipo de cuerpo para ver más información aquí.</div>
+
+    <input type="hidden" id="cuerpo" name="cuerpo" required>
 
     <button type="submit">Calcular y continuar</button>
   </form>
@@ -94,39 +149,7 @@
       saludo.textContent = 'Hola';
     }
 
-    // Definiciones
-    const definiciones = {
-      endomorfo: "Cuerpo con tendencia a acumular grasa, metabolismo lento.",
-      mesomorfo: "Cuerpo musculoso, responde bien al entrenamiento.",
-      ectomorfo: "Cuerpo delgado, con dificultad para ganar masa muscular."
-    };
-
-    document.getElementById('cuerpo').addEventListener('change', function () {
-      const tipo = this.value;
-      const def = definiciones[tipo] || "";
-      document.getElementById('definicion').textContent = def;
-    });
-
-    // Guardar datos y continuar
-    document.getElementById('formDatos').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const edad = document.getElementById('edad').value;
-      const peso = document.getElementById('peso').value;
-      const altura = document.getElementById('altura').value;
-      const cuerpo = document.getElementById('cuerpo').value;
-
-      localStorage.setItem('edad', edad);
-      localStorage.setItem('peso', peso);
-      localStorage.setItem('altura', altura);
-      localStorage.setItem('cuerpo', cuerpo);
-
-      // Calcular IMC y guardar
-      const imc = (peso / (altura * altura)).toFixed(2);
-      localStorage.setItem('imc', imc);
-
-      // Redirigir a paso 4
-      window.location.href = 'deporte.html';
-    });
-  </script>
-</body>
-</html>
+    // Definiciones largas
+    const definicionesLargas = {
+      endomorfo: "Los endomorfos tienden a acumular grasa fácilmente, tienen un metabolismo más lento y pueden tener dificultad para perder peso. Requieren una alimentación balanceada y ejercicios cardiovasculares junto con fuerza.",
+      mesomorfo:
