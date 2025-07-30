@@ -1,136 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Entrenamiento Personalizado</title>
-  <link rel="icon" href="favicon.ico" />
+  <meta charset="UTF-8" />
+  <title>Plan de Entrenamiento</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <style>
     body {
       background-color: #121212;
       color: #eee;
       font-family: Arial, sans-serif;
+      margin: 0;
       padding: 20px;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
+    h1, h2 {
+      color: #fff;
     }
-    select, button {
-      display: block;
-      margin: 15px auto;
-      padding: 10px;
-      font-size: 16px;
-      width: 90%;
-      max-width: 400px;
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .day {
+      background-color: #1e1e1e;
+      padding: 15px;
       border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #000;
     }
-    .plan {
-      background-color: #1f1f1f;
-      padding: 20px;
-      border-radius: 15px;
-      margin-top: 20px;
-    }
-    .footer {
+    footer {
       margin-top: 40px;
       text-align: center;
-      font-size: 0.9em;
-      color: #aaa;
+      font-size: 14px;
+      color: #ccc;
     }
-    button {
-      background-color: #00ffcc;
-      color: #121212;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #00ccb3;
+    a {
+      color: #90caf9;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Tu Plan de Entrenamiento Personalizado</h1>
+    <h2>Deporte: MTB – Disciplina: Downhill</h2>
+    <h3>Tipo de cuerpo: Endomorfo – IMC: Sobrepeso</h3>
 
-  <h2>Entrenamiento Personalizado</h2>
+    <div class="day">
+      <h3>Día 1</h3>
+      <p>Cardio ligero (20 min bici estática), movilidad articular, técnica en bajadas controladas, core 15 min.</p>
+    </div>
+    <div class="day">
+      <h3>Día 2</h3>
+      <p>Subidas cortas con técnica, estiramiento dinámico, fuerza piernas (sentadillas + zancadas sin peso).</p>
+    </div>
+    <div class="day">
+      <h3>Día 3</h3>
+      <p>Descanso activo: caminata 30 min, movilidad lumbar y caderas.</p>
+    </div>
+    <div class="day">
+      <h3>Día 4</h3>
+      <p>Entrenamiento técnico en bajadas + práctica frenado. Fuerza tren superior (flexiones + remo).</p>
+    </div>
+    <div class="day">
+      <h3>Día 5</h3>
+      <p>Sesión completa de MTB en terreno real (1h), hidratación y técnica de respiración.</p>
+    </div>
+    <div class="day">
+      <h3>Día 6</h3>
+      <p>Yoga de recuperación (45 min), enfoque en espalda baja y piernas. Foam roller.</p>
+    </div>
+    <div class="day">
+      <h3>Día 7</h3>
+      <p>Entrenamiento libre: recorrido suave + ejercicios de equilibrio en la bici.</p>
+    </div>
 
-  <label for="deporte">Selecciona tu deporte:</label>
-  <select id="deporte" onchange="actualizarDisciplinas()">
-    <option value="">-- Selecciona --</option>
-    <option value="mtb">MTB</option>
-    <option value="gimnasio">Gimnasio</option>
-    <option value="yoga">Yoga</option>
-    <option value="atletismo">Atletismo</option>
-    <option value="natacion">Natación</option>
-    <option value="sedentario">Sedentario</option>
-  </select>
+    <br>
+    <a href="deporte.html">← Volver al menú de selección</a>
 
-  <label for="disciplina">Selecciona tu disciplina:</label>
-  <select id="disciplina">
-    <option value="">-- Selecciona un deporte primero --</option>
-  </select>
-
-  <button onclick="mostrarPlan()">Mostrar Entrenamiento</button>
-
-  <div id="resultado" class="plan"></div>
-
-  <div class="footer">By: Juan Pablo Cruz</div>
-
-  <script>
-    const disciplinas = {
-      mtb: ["Cross Country", "Enduro", "Downhill"],
-      gimnasio: ["Hipertrofia", "Resistencia", "Fuerza"],
-      yoga: ["Hatha", "Vinyasa", "Ashtanga"],
-      atletismo: ["Velocidad", "Fondo", "Lanzamiento"],
-      natacion: ["Estilo Libre", "Pecho", "Espalda"],
-      sedentario: ["Movilidad", "Cardio Suave", "Estiramientos"]
-    };
-
-    function actualizarDisciplinas() {
-      const deporte = document.getElementById("deporte").value;
-      const disciplinaSelect = document.getElementById("disciplina");
-      disciplinaSelect.innerHTML = "";
-
-      if (disciplinas[deporte]) {
-        disciplinas[deporte].forEach(d => {
-          const option = document.createElement("option");
-          option.value = d.toLowerCase().replace(/ /g, "_");
-          option.textContent = d;
-          disciplinaSelect.appendChild(option);
-        });
-      } else {
-        const defaultOption = document.createElement("option");
-        defaultOption.textContent = "-- Selecciona un deporte primero --";
-        disciplinaSelect.appendChild(defaultOption);
-      }
-    }
-
-    function mostrarPlan() {
-      const deporte = document.getElementById("deporte").value;
-      const disciplina = document.getElementById("disciplina").value;
-      const imc = localStorage.getItem("imc");
-      const tipoCuerpo = localStorage.getItem("tipoCuerpo");
-
-      const resultado = document.getElementById("resultado");
-
-      if (!deporte || !disciplina || !imc || !tipoCuerpo) {
-        resultado.innerHTML = "<p>Por favor, completa todos los datos antes de continuar.</p>";
-        return;
-      }
-
-      resultado.innerHTML = `
-        <h3>Plan para ${deporte.toUpperCase()} - ${disciplina.replace(/_/g, ' ')}</h3>
-        <p><strong>IMC:</strong> ${imc} | <strong>Tipo de cuerpo:</strong> ${tipoCuerpo}</p>
-        <ul>
-          <li>Entrenamiento 1: Calentamiento dinámico adaptado</li>
-          <li>Entrenamiento 2: Técnica específica de ${disciplina}</li>
-          <li>Entrenamiento 3: Fortalecimiento según tipo de cuerpo (${tipoCuerpo})</li>
-          <li>Entrenamiento 4: Sesión aeróbica adaptada al IMC</li>
-          <li>Entrenamiento 5: Flexibilidad y movilidad</li>
-          <li>Entrenamiento 6: Descanso activo</li>
-          <li>Entrenamiento 7: Evaluación de progreso</li>
-        </ul>
-      `;
-    }
-  </script>
-
+    <footer>
+      <p>By: Juan Pablo Cruz • MiFitApp © 2025</p>
+    </footer>
+  </div>
 </body>
 </html>
