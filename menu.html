@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Menú Personalizado</title>
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    body {
+      background-color: #121212;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 25px;
+    }
+    button {
+      display: block;
+      margin: 15px auto;
+      padding: 14px 20px;
+      font-size: 16px;
+      background-color: #00ffcc;
+      color: #121212;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 80%;
+      max-width: 300px;
+    }
+    button:hover {
+      background-color: #00ccb3;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 id="saludo">Menú personalizado</h2>
+
+  <button onclick="irA('alimentacion.html')">🍽 Alimentación Personalizada</button>
+  <button onclick="irA('entrenamiento.html')">🏋️ Entrenamiento Personalizado</button>
+  <button onclick="irA('resultadoIMC.html')">🔙 Volver al Resultado del IMC</button>
+
+  <div class="footer">By: Juan Pablo Cruz</div>
+
+  <script>
+    const nombre = localStorage.getItem("nombre") || "Usuario";
+    const saludo = document.getElementById("saludo");
+    saludo.textContent = `Hola ${nombre}, elige una opción:`;
+
+    function irA(pagina) {
+      window.location.href = pagina;
+    }
+  <
