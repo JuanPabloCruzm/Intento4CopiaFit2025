@@ -7,50 +7,62 @@
   <style>
     body {
       background-color: #121212;
-      color: #ffffff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 40px;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
 
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
       margin-bottom: 40px;
+      text-align: center;
     }
 
-    .btn {
-      background-color: #1f1f1f;
-      color: #ffffff;
-      border: 1px solid #555;
-      border-radius: 10px;
-      padding: 15px 30px;
-      margin: 20px;
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    button {
+      padding: 15px;
       font-size: 1.2em;
+      border: none;
+      border-radius: 12px;
+      background-color: #1f1f1f;
+      color: #fff;
       cursor: pointer;
-      width: 250px;
+      transition: background 0.3s;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     }
 
-    .btn:hover {
+    button:hover {
       background-color: #333;
     }
 
     footer {
-      margin-top: 60px;
+      position: absolute;
+      bottom: 20px;
       font-size: 0.9em;
-      color: #aaa;
+      color: #888;
     }
   </style>
 </head>
 <body>
+  <h1>Menú Principal</h1>
 
-  <h1>¿Qué quieres hacer ahora?</h1>
+  <div class="menu-buttons">
+    <button onclick="window.location.href='alimentacion.html'">Plan de Alimentación</button>
+    <button onclick="window.location.href='entrenamiento.html'">Plan de Entrenamiento</button>
+  </div>
 
-  <button class="btn" onclick="location.href='alimentacion.html'">Plan de Alimentación</button><br>
-  <button class="btn" onclick="location.href='entrenamiento.html'">Plan de Entrenamiento</button>
-
-  <footer>
-    By: Juan Pablo Cruz
-  </footer>
-
+  <footer>By: Juan Pablo Cruz</footer>
 </body>
 </html>
