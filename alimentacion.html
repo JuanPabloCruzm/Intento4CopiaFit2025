@@ -3,105 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <title>Plan de Alimentación</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="favicon.ico" />
   <style>
     body {
       background-color: #121212;
       color: #eee;
       font-family: Arial, sans-serif;
-      margin: 0;
       padding: 20px;
-    }
-    h1, h2 {
-      color: #fff;
-    }
-    .container {
-      max-width: 800px;
+      max-width: 700px;
       margin: auto;
     }
-    .day {
-      background-color: #1e1e1e;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      box-shadow: 0 0 10px #000;
-    }
-    .meal {
-      margin-bottom: 10px;
-    }
-    footer {
-      margin-top: 40px;
+    h1, h2 {
       text-align: center;
-      font-size: 14px;
-      color: #ccc;
     }
-    a {
-      color: #90caf9;
-      text-decoration: none;
+    .dia {
+      background-color: #1f1f1f;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .comida {
+      margin: 5px 0;
+    }
+    button {
+      display: block;
+      margin: 30px auto;
+      background-color: #1f1f1f;
+      border: 2px solid #eee;
+      color: #eee;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #333;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Tu Plan de Alimentación Personalizado</h1>
-    <h2>Deporte: MTB – Disciplina: Downhill</h2>
-    <h3>Tipo de cuerpo: Endomorfo – IMC: Sobrepeso</h3>
 
-    <div class="day">
-      <h3>Día 1</h3>
-      <div class="meal"><strong>Desayuno:</strong> Avena cocida con leche vegetal, plátano y nueces.</div>
-      <div class="meal"><strong>Almuerzo:</strong> Filete de salmón, arroz integral, ensalada de hojas verdes con palta.</div>
-      <div class="meal"><strong>Cena:</strong> Omelette de 2 huevos con espinaca y tomate, 1 rebanada de pan integral.</div>
-    </div>
+  <h1>Plan de Alimentación</h1>
+  <h2 id="saludo"></h2>
+  <div id="plan"></div>
 
-    <div class="day">
-      <h3>Día 2</h3>
-      <div class="meal"><strong>Desayuno:</strong> Yogur natural con chía, frutillas y avena.</div>
-      <div class="meal"><strong>Almuerzo:</strong> Pollo a la plancha con quinoa y ensalada mixta.</div>
-      <div class="meal"><strong>Cena:</strong> Sopa de verduras + pan integral con palta.</div>
-    </div>
+  <button onclick="volverAlMenu()">Volver al Menú</button>
 
-    <div class="day">
-      <h3>Día 3</h3>
-      <div class="meal"><strong>Desayuno:</strong> Pan integral con palta y huevo duro + té verde.</div>
-      <div class="meal"><strong>Almuerzo:</strong> Carne magra (posta o lomo) con papas cocidas y brócoli al vapor.</div>
-      <div class="meal"><strong>Cena:</strong> Ensalada de atún con lentejas y vegetales.</div>
-    </div>
+  <script>
+    // Obtener datos desde localStorage
+    const nombre = localStorage.getItem('nombre') || 'usuario';
+    const imc = parseFloat(localStorage.getItem('imc'));
+    const tipoCuerpo = localStorage.getItem('tipoCuerpo');
+    const deporte = localStorage.getItem('deporte');
+    const disciplina = localStorage.getItem('disciplina');
+    const especialidad = localStorage.getItem('especialidad');
 
-    <div class="day">
-      <h3>Día 4</h3>
-      <div class="meal"><strong>Desayuno:</strong> Smoothie verde con espinaca, manzana, pepino y proteína vegetal.</div>
-      <div class="meal"><strong>Almuerzo:</strong> Pastas integrales con verduras salteadas y pechuga de pollo.</div>
-      <div class="meal"><strong>Cena:</strong> Tofu al horno con zapallo italiano y arroz integral.</div>
-    </div>
+    // Clasificar IMC
+    let clasificacion = '';
+    if (imc < 18.5) clasificacion = 'bajo peso';
+    else if (imc >= 18.5 && imc <= 24.9) clasificacion = 'peso normal';
+    else clasificacion = 'sobrepeso';
 
-    <div class="day">
-      <h3>Día 5</h3>
-      <div class="meal"><strong>Desayuno:</strong> Avena con canela, pera picada y nueces.</div>
-      <div class="meal"><strong>Almuerzo:</strong> Hamburguesas caseras de lentejas, ensalada de repollo morado y zanahoria.</div>
-      <div class="meal"><strong>Cena:</strong> Pechuga al horno + puré de zapallo y espárragos al vapor.</div>
-    </div>
+    // Saludo personalizado
+    document.getElementById('saludo').textContent = `Hola ${nombre}, aquí está tu plan de alimentación según tu IMC (${clasificacion}), tipo de cuerpo (${tipoCuerpo}) y deporte (${deporte}${disciplina ? ' - ' + disciplina : ''}${especialidad ? ' - ' + especialidad : ''}).`;
 
-    <div class="day">
-      <h3>Día 6</h3>
-      <div class="meal"><strong>Desayuno:</strong> Pan integral con ricota + mermelada sin azúcar y 1 fruta.</div>
-      <div class="meal"><strong>Almuerzo:</strong> Arroz integral, garbanzos salteados y ensalada de rúcula.</div>
-      <div class="meal"><strong>Cena:</strong> Ensalada tibia de quinoa, espinaca, huevo y zanahoria cocida.</div>
-    </div>
+    // Planes ejemplo: 7 días con 3 comidas cada uno, para la demo (completa esto con más opciones)
+    const planes = {
+      mtb: {
+        "bajo peso": [
+          ["Desayuno MTB BP 1", "Almuerzo MTB BP 1", "Cena MTB BP 1"],
+          ["Desayuno MTB BP 2", "Almuerzo MTB BP 2", "Cena MTB BP 2"],
+          ["Desayuno MTB BP 3", "Almuerzo MTB BP 3", "Cena MTB BP 3"],
+          ["Desayuno MTB BP 4", "Almuerzo MTB BP 4", "Cena MTB BP 4"],
+          ["Desayuno MTB BP 5", "Almuerzo MTB BP 5", "Cena MTB BP 5"],
+          ["Desayuno MTB BP 6", "Almuerzo MTB BP 6", "Cena MTB BP 6"],
+          ["Desayuno MTB BP 7", "Almuerzo MTB BP 7", "Cena MTB BP 7"]
+        ],
+        "peso normal": [
+          ["Desayuno MTB PN 1", "Almuerzo MTB PN 1", "Cena MTB PN 1"],
+          ["Desayuno MTB PN 2", "Almuerzo MTB PN 2", "Cena MTB PN 2"],
+          ["Desayuno MTB PN 3", "Almuerzo MTB PN 3", "Cena MTB PN 3"],
+          ["Desayuno MTB PN 4", "Almuerzo MTB PN 4", "Cena MTB PN 4"],
+          ["Desayuno MTB PN 5", "Almuerzo MTB PN 5", "Cena MTB PN 5"],
+          ["Desayuno MTB PN 6", "Almuerzo MTB PN 6", "Cena MTB PN 6"],
+          ["Desayuno MTB PN 7", "Almuerzo MTB PN 7", "Cena MTB PN 7"]
+        ],
+        "sobrepeso": [
+          ["Desayuno MTB SP 1", "Almuerzo MTB SP 1", "Cena MTB SP 1"],
+          ["Desayuno MTB SP 2", "Almuerzo MTB SP 2", "Cena MTB SP 2"],
+          ["Desayuno MTB SP 3", "Almuerzo MTB SP 3", "Cena MTB SP 3"],
+          ["Desayuno MTB SP 4", "Almuerzo MTB SP 4", "Cena MTB SP 4"],
+          ["Desayuno MTB SP 5", "Almuerzo MTB SP 5", "Cena MTB SP 5"],
+          ["Desayuno MTB SP 6", "Almuerzo MTB SP 6", "Cena MTB SP 6"],
+          ["Desayuno MTB SP 7", "Almuerzo MTB SP 7", "Cena MTB SP 7"]
+        ],
+      },
 
-    <div class="day">
-      <h3>Día 7</h3>
-      <div class="meal"><strong>Desayuno:</strong> Pan pita integral con pechuga de pavo y tomate + jugo natural.</div>
-      <div class="meal"><strong>Almuerzo:</strong> Filete de merluza con arroz salvaje y ensalada de espinacas con semillas.</div>
-      <div class="meal"><strong>Cena:</strong> Revuelto de claras, espárragos y champiñones + infusión.</div>
-    </div>
+      gimnasio: {
+        "bajo peso": [ /* igual estructura con 7 comidas x 3 */ ],
+        "peso normal": [ /* ... */ ],
+        "sobrepeso": [ /* ... */ ]
+      },
 
-    <br>
-    <a href="deporte.html">← Volver al menú de selección</a>
+      yoga: {
+        "bajo peso": [ /* ... */ ],
+        "peso normal": [ /* ... */ ],
+        "sobrepeso": [ /* ... */ ]
+      },
 
-    <footer>
-      <p>By: Juan Pablo Cruz • MiFitApp © 2025</p>
-    </footer>
-  </div>
+      atletismo: {
+        "bajo peso": [ /* ... */ ],
+        "peso normal": [ /* ... */ ],
+        "sobrepeso": [ /* ... */ ]
+      },
+
+      natacion: {
+        "bajo peso": [ /* ... */ ],
+        "peso normal": [ /* ... */ ],
+        "sobrepeso": [ /* ... */ ]
+      },
+
+      rugby: {
+        "bajo peso": [ /* ... */ ],
+        "peso normal": [ /* ... */ ],
+        "sobrepeso": [ /* ... */ ]
+      },
+
+      futbol: {
+        "bajo peso": [ /* ... */ ],
+        "peso normal": [ /* ... */ ],
+        "sobrepeso": [ /* ... */ ]
+      },
+
+      sedentario: {
+        "bajo peso": [ /* ... */ ],
+        "peso normal": [ /* ... */ ],
+        "sobrepeso": [ /* ... */ ]
+      }
+    };
+
+    // Función para obtener plan correcto
+    function obtenerPlan() {
+      if (!planes[deporte]) return null;
+      if (!planes[deporte][clasificacion]) return null;
+
+      return planes[deporte][clasificacion];
+    }
+
+    const plan = obtenerPlan();
+    const planDiv = document.getElementById('plan');
+
+    if (plan) {
+      for (let i = 0; i < plan.length; i++) {
+        const dia = plan[i];
+        const diaDiv = document.createElement('div');
+        diaDiv.classList.add('dia');
+        diaDiv.innerHTML = `
+          <h3>Día ${i + 1}</h3>
+          <p class="comida"><strong>Desayuno:</strong> ${dia[0]}</p>
+          <p class="comida"><strong>Almuerzo:</strong> ${dia[1]}</p>
+          <p class="comida"><strong>Cena:</strong> ${dia[2]}</p>
+        `;
+        planDiv.appendChild(diaDiv);
+      }
+    } else {
+      planDiv.innerHTML = `<p>No hay un plan disponible para tu combinación actual.</p>`;
+    }
+
+    function volverAlMenu() {
+      window.location.href = 'menu.html';
+    }
+  </script>
+
 </body>
 </html>
