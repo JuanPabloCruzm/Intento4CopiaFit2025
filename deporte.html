@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Selecciona tu Deporte</title>
   <link rel="icon" href="favicon.ico" />
   <style>
@@ -10,102 +10,57 @@
       color: #eee;
       font-family: Arial, sans-serif;
       padding: 20px;
+    }
+
+    h1 {
       text-align: center;
     }
-    select, button {
+
+    label, select {
+      display: block;
       margin: 15px auto;
-      padding: 12px;
-      font-size: 16px;
-      width: 80%;
-      max-width: 300px;
-      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    select {
+      padding: 10px;
+      background-color: #222;
+      color: white;
       border: none;
+      border-radius: 5px;
     }
-    button {
-      background-color: #00ffcc;
-      color: #121212;
-      font-weight: bold;
+
+    .button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 24px;
+      background-color: #1e88e5;
+      color: white;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
+      font-size: 16px;
     }
-    button:hover {
-      background-color: #00ccb3;
+
+    .button:hover {
+      background-color: #1565c0;
     }
-    h2 {
-      margin-bottom: 20px;
+
+    #disciplina-container, #meta-container, #especialidad-container {
+      display: none;
     }
-    .footer {
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #aaa;
+
+    .branding {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
 <body>
+  <h1>Selecciona tu Deporte</h1>
 
-  <h2>Selecciona tu deporte, chico</h2>
-
-  <select id="deporte" onchange="cargarDisciplinas()">
-    <option disabled selected>Selecciona tu deporte</option>
-    <option value="mtb">MTB</option>
-    <option value="gimnasio">Gimnasio</option>
-    <option value="yoga">Yoga</option>
-    <option value="atletismo">Atletismo</option>
-    <option value="natación">Natación</option>
-    <option value="sedentario">Sedentario</option>
-  </select>
-
-  <select id="disciplina">
-    <option disabled selected>Primero selecciona un deporte</option>
-  </select>
-
-  <button onclick="guardarYContinuar()">Continuar</button>
-
-  <div class="footer">By: Juan Pablo Cruz</div>
-
-  <script>
-    const disciplinas = {
-      mtb: ["XC", "Enduro", "Downhill"],
-      gimnasio: ["Hipertrofia", "Fuerza", "Resistencia"],
-      yoga: ["Vinyasa", "Hatha", "Yin Yoga"],
-      atletismo: ["Velocidad", "Fondo", "Marcha"],
-      natación: ["Libre", "Mariposa", "Pecho"],
-      sedentario: ["Principiante", "Recuperación", "Ligero"]
-    };
-
-    function cargarDisciplinas() {
-      const deporte = document.getElementById('deporte').value;
-      const disciplinaSelect = document.getElementById('disciplina');
-      disciplinaSelect.innerHTML = "";
-
-      if (disciplinas[deporte]) {
-        disciplinas[deporte].forEach(op => {
-          const option = document.createElement("option");
-          option.value = op.toLowerCase();
-          option.textContent = op;
-          disciplinaSelect.appendChild(option);
-        });
-      } else {
-        const option = document.createElement("option");
-        option.textContent = "Sin disciplinas disponibles";
-        disciplinaSelect.appendChild(option);
-      }
-    }
-
-    function guardarYContinuar() {
-      const deporte = document.getElementById('deporte').value;
-      const disciplina = document.getElementById('disciplina').value;
-
-      if (!deporte || !disciplina) {
-        alert("Debes seleccionar el deporte y su disciplina");
-        return;
-      }
-
-      localStorage.setItem("deporte", deporte);
-      localStorage.setItem("disciplina", disciplina);
-
-      window.location.href = "menu.html";
-    }
-  </script>
-
-</body>
-</html>
+  <label for="deporte">Deporte:</label>
+  <select id="deporte" onchange="mostrarOpciones()">
