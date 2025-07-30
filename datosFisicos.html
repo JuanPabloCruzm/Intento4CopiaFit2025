@@ -64,6 +64,7 @@
       cursor: pointer;
       border: 2px solid transparent;
       transition: border-color 0.3s ease, background-color 0.3s ease;
+      user-select: none;
     }
     .tipo-card:hover {
       background-color: #333;
@@ -152,4 +153,81 @@
     // Definiciones largas
     const definicionesLargas = {
       endomorfo: "Los endomorfos tienden a acumular grasa fácilmente, tienen un metabolismo más lento y pueden tener dificultad para perder peso. Requieren una alimentación balanceada y ejercicios cardiovasculares junto con fuerza.",
-      mesomorfo:
+      mesomorfo: "Los mesomorfos tienen un cuerpo naturalmente musculoso y atlético, responden muy bien al entrenamiento de fuerza y suelen ganar músculo con facilidad.",
+      ectomorfo: "Los ectomorfos son delgados, con un metabolismo rápido, lo que dificulta la ganancia de peso y masa muscular. Suelen necesitar una dieta hipercalórica y entrenamientos específicos para aumentar masa muscular."
+    };
+
+    const tipoCards = document.querySelectorAll('.tipo-card');
+    const definicionLargaDiv = document.getElementById('definicion-larga');
+    const inputCuerpo = document.getElementById('cuerpo');
+
+    // Función para marcar selección visual y actualizar input oculto
+    function seleccionarTipo(tipo) {
+      tipoCards.forEach(c => {
+        if (c.getAttribute('data-tipo') === tipo) {
+          c.classList.add('selected');
+        } else {
+          c.classList.remove('selected');
+        }
+      });
+      inputCuerpo.value = tipo;
+      definicionLargaDiv.textContent = definicionesLargas[tipo];
+    }
+
+    // Evento click en cards
+    tipoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        seleccionarTipo(card.getAttribute('data-tipo'));
+      });
+      // Soporte teclado accesible
+      card.addEventListener('keypress', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          seleccionarTipo(card.getAttribute('data-tipo'));
+        }
+      });
+    });
+
+    // Al cargar la página, cargar selección guardada si existe
+    window.addEventListener('DOMContentLoaded', () => {
+      // Cargar campos previos si existen
+      const edad = localStorage.getItem('edad');
+      const peso = localStorage.getItem('peso');
+      const altura = localStorage.getItem('altura');
+      const cuerpo = localStorage.getItem('cuerpo');
+
+      if (edad) document.getElementById('edad').value = edad;
+      if (peso) document.getElementById('peso').value = peso;
+      if (altura) document.getElementById('altura').value = altura;
+      if (cuerpo) seleccionarTipo(cuerpo);
+    });
+
+    // Guardar y redirigir
+    document.getElementById('formDatos').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!inputCuerpo.value) {
+        alert('Por favor, selecciona un tipo de cuerpo.');
+        return;
+      }
+
+      // Guardar datos en localStorage
+      const edad = document.getElementById('edad').value;
+      const peso = document.getElementById('peso').value;
+      const altura = document.getElementById('altura').value;
+      const cuerpo = inputCuerpo.value;
+
+      localStorage.setItem('edad', edad);
+      localStorage.setItem('peso', peso);
+      localStorage.setItem('altura', altura);
+      localStorage.setItem('cuerpo', cuerpo);
+
+      // Calcular IMC y guardar
+      const imc = (peso / (altura * altura)).toFixed(2);
+      localStorage.setItem('imc', imc);
+
+      // Redirigir a deporte.html
+      window.location.href = 'deporte.html';
+    });
+  </script>
+</body>
+</html>
