@@ -2,38 +2,40 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Menú Personalizado</title>
-  <link rel="icon" href="favicon.ico" />
+  <title>Mi FitApp - Menú</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <style>
     body {
       background-color: #121212;
-      color: #eee;
-      font-family: Arial, sans-serif;
-      padding: 20px;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
       text-align: center;
+      padding: 40px;
     }
-    h2 {
-      margin-bottom: 25px;
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 40px;
     }
-    button {
-      display: block;
-      margin: 15px auto;
-      padding: 14px 20px;
-      font-size: 16px;
-      background-color: #00ffcc;
-      color: #121212;
-      font-weight: bold;
-      border: none;
+
+    .btn {
+      background-color: #1f1f1f;
+      color: #ffffff;
+      border: 1px solid #555;
       border-radius: 10px;
+      padding: 15px 30px;
+      margin: 20px;
+      font-size: 1.2em;
       cursor: pointer;
-      width: 80%;
-      max-width: 300px;
+      width: 250px;
     }
-    button:hover {
-      background-color: #00ccb3;
+
+    .btn:hover {
+      background-color: #333;
     }
-    .footer {
-      margin-top: 40px;
+
+    footer {
+      margin-top: 60px;
       font-size: 0.9em;
       color: #aaa;
     }
@@ -41,23 +43,14 @@
 </head>
 <body>
 
-  <h2 id="saludo">Menú personalizado</h2>
+  <h1>¿Qué quieres hacer ahora?</h1>
 
-  <button onclick="irA('alimentacion.html')">🍽 Alimentación Personalizada</button>
-  <button onclick="irA('entrenamiento.html')">🏋️ Entrenamiento Personalizado</button>
-  <button onclick="irA('resultadoIMC.html')">🔙 Volver al Resultado del IMC</button>
+  <button class="btn" onclick="location.href='alimentacion.html'">Plan de Alimentación</button><br>
+  <button class="btn" onclick="location.href='entrenamiento.html'">Plan de Entrenamiento</button>
 
-  <div class="footer">By: Juan Pablo Cruz</div>
-
-  <script>
-    const nombre = localStorage.getItem("nombre") || "Usuario";
-    const saludo = document.getElementById("saludo");
-    saludo.textContent = `Hola ${nombre}, elige una opción:`;
-
-    function irA(pagina) {
-      window.location.href = pagina;
-    }
-  </script>
+  <footer>
+    By: Juan Pablo Cruz
+  </footer>
 
 </body>
 </html>
