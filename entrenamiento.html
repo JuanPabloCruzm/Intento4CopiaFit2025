@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <title>Plan de Entrenamiento</title>
+  <title>Entrenamiento - MiFitApp</title>
   <style>
     body {
       background-color: #121212;
@@ -32,71 +32,79 @@
       font-size: 16px;
       cursor: pointer;
     }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #888;
+    }
   </style>
 </head>
 <body>
-  <h1>Plan de Entrenamiento Semanal</h1>
+  <h1>Tu Plan de Entrenamiento</h1>
   <h2 id="tituloIMC"></h2>
 
   <div id="rutina"></div>
 
   <button id="volver" onclick="window.location.href='menu.html'">Volver al Menú</button>
 
+  <footer>By: Juan Pablo Cruz</footer>
+
   <script>
-    // Obtener el IMC guardado desde localStorage
-    const imc = parseFloat(localStorage.getItem('imc')) || 0;
+    // Obtener IMC
+    const imc = parseFloat(localStorage.getItem("imc")) || 0;
 
     const rutinaBajoPeso = [
-      "Día 1: Full body con peso corporal (sentadillas, flexiones, abdominales)",
-      "Día 2: Entrenamiento de fuerza con mancuernas o botellas de agua",
-      "Día 3: Cardio suave (20-30 min) + estiramientos",
-      "Día 4: Circuito de fuerza (3 vueltas: 10 sentadillas, 10 flexiones, 30 seg plancha)",
-      "Día 5: Core (plancha, crunches, elevaciones de piernas)",
-      "Día 6: Caminata rápida 30 min + movilidad",
-      "Día 7: Descanso activo (yoga suave o estiramientos)"
+      "Día 1: Rutina de fuerza: sentadillas, flexiones, abdominales",
+      "Día 2: Ejercicios con peso corporal + mancuernas ligeras",
+      "Día 3: Cardio ligero: caminata 30 minutos",
+      "Día 4: Entrenamiento de fuerza: tren inferior + core",
+      "Día 5: Yoga suave + movilidad",
+      "Día 6: Circuito full body: 3 vueltas de 5 ejercicios",
+      "Día 7: Descanso activo (bicicleta suave o estiramiento)"
     ];
 
     const rutinaPesoNormal = [
-      "Día 1: Cardio 30 min + circuito de fuerza (flexiones, zancadas)",
-      "Día 2: Rutina HIIT 20 min + abdominales",
-      "Día 3: Caminata rápida o bici 45 min",
-      "Día 4: Full body funcional (sentadillas + press + plancha)",
-      "Día 5: Core + movilidad articular",
-      "Día 6: Trote 30 min + estiramientos",
-      "Día 7: Yoga o descanso activo"
+      "Día 1: Cardio 30 min + circuito funcional",
+      "Día 2: HIIT: 20 min de intervalos intensos",
+      "Día 3: Trote moderado 45 min",
+      "Día 4: Fuerza full body con peso corporal",
+      "Día 5: Core + equilibrio + movilidad",
+      "Día 6: Bicicleta o caminata larga",
+      "Día 7: Yoga o recuperación activa"
     ];
 
     const rutinaSobrepeso = [
-      "Día 1: Caminata o bicicleta suave 40 min",
-      "Día 2: Circuito suave (sentadillas sin peso, paso alto, plancha de rodillas)",
-      "Día 3: Cardio acuático o elíptica 30 min",
-      "Día 4: Fuerza básica con bandas o peso corporal",
-      "Día 5: Estiramientos largos + core ligero",
-      "Día 6: Caminata en pendiente o bici estática 30 min",
-      "Día 7: Descanso o yoga suave"
+      "Día 1: Caminata rápida 40 minutos",
+      "Día 2: Circuito suave: sentadillas sin peso, plancha, elevaciones",
+      "Día 3: Cardio acuático o bicicleta estática 30 minutos",
+      "Día 4: Rutina funcional adaptada con pausas largas",
+      "Día 5: Respiración + estiramientos de espalda y piernas",
+      "Día 6: Caminata en pendiente o paseo en bici",
+      "Día 7: Descanso o meditación guiada"
     ];
 
-    let tituloIMC = "";
+    let titulo = "";
     let rutina = [];
 
     if (imc < 18.5) {
-      tituloIMC = "Objetivo: Subir de peso y ganar fuerza (IMC Bajo)";
+      titulo = "IMC Bajo - Enfoque: ganar fuerza y masa muscular";
       rutina = rutinaBajoPeso;
     } else if (imc >= 18.5 && imc < 25) {
-      tituloIMC = "Objetivo: Mantener condición física (IMC Normal)";
+      titulo = "IMC Normal - Enfoque: mantener forma física";
       rutina = rutinaPesoNormal;
     } else {
-      tituloIMC = "Objetivo: Bajar de peso y mejorar resistencia (IMC Alto)";
+      titulo = "IMC Alto - Enfoque: bajar grasa y mejorar resistencia";
       rutina = rutinaSobrepeso;
     }
 
-    document.getElementById("tituloIMC").innerText = tituloIMC;
+    document.getElementById("tituloIMC").innerText = titulo;
 
     const contenedor = document.getElementById("rutina");
-    rutina.forEach((dia, i) => {
+    rutina.forEach((texto) => {
       const div = document.createElement("div");
       div.className = "dia";
-      div.innerText = dia;
+      div.innerText = texto;
       contenedor.appendChild(div);
     });
   </script>
