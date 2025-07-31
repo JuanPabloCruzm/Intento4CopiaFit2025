@@ -1,61 +1,104 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Plan Semanal - MTB XC</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>Plan de Entrenamiento</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f8f8f8; padding: 20px; }
-    h1, h2 { color: #2b2b2b; }
-    .disciplina { background: #fff; padding: 15px; margin-bottom: 30px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-    .imc-bajo { border-left: 5px solid #3498db; }
-    .imc-medio { border-left: 5px solid #27ae60; }
-    .imc-alto { border-left: 5px solid #e74c3c; }
-    ul { padding-left: 20px; }
-    li { margin-bottom: 5px; }
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .dia {
+      background-color: #1e1e1e;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    #volver {
+      display: block;
+      margin: 30px auto;
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <h1>Plan de Entrenamiento Semanal</h1>
+  <h2 id="tituloIMC"></h2>
 
-  <h1>🚵 Entrenamiento Semanal MTB – Cross Country (XC)</h1>
+  <div id="rutina"></div>
 
-  <div class="disciplina imc-bajo">
-    <h2>💙 IMC Bajo</h2>
-    <ul>
-      <li><strong>Día 1:</strong> Cadencia ligera + estiramientos dinámicos</li>
-      <li><strong>Día 2:</strong> Subidas cortas en intervalos</li>
-      <li><strong>Día 3:</strong> Técnica de curvas y frenado</li>
-      <li><strong>Día 4:</strong> Rodada larga en plano (resistencia)</li>
-      <li><strong>Día 5:</strong> Core y postura en bicicleta</li>
-      <li><strong>Día 6:</strong> Simulación de carrera (30 min)</li>
-      <li><strong>Día 7:</strong> Recuperación activa + revisión mecánica</li>
-    </ul>
-  </div>
+  <button id="volver" onclick="window.location.href='menu.html'">Volver al Menú</button>
 
-  <div class="disciplina imc-medio">
-    <h2>💚 IMC Medio</h2>
-    <ul>
-      <li><strong>Día 1:</strong> Rodada 15 km + técnica de cambios</li>
-      <li><strong>Día 2:</strong> Intervalos con cronómetro</li>
-      <li><strong>Día 3:</strong> Entrenamiento de potencia en subida</li>
-      <li><strong>Día 4:</strong> Control postural en rutas mixtas</li>
-      <li><strong>Día 5:</strong> Trail con obstáculos</li>
-      <li><strong>Día 6:</strong> Ruta continua 90 min</li>
-      <li><strong>Día 7:</strong> Movilidad + estiramientos conscientes</li>
-    </ul>
-  </div>
+  <script>
+    // Obtener el IMC guardado desde localStorage
+    const imc = parseFloat(localStorage.getItem('imc')) || 0;
 
-  <div class="disciplina imc-alto">
-    <h2>❤️ IMC Alto</h2>
-    <ul>
-      <li><strong>Día 1:</strong> Rodada suave 10 km en plano</li>
-      <li><strong>Día 2:</strong> Técnica postural + ritmo cardíaco</li>
-      <li><strong>Día 3:</strong> Movilidad sin bicicleta</li>
-      <li><strong>Día 4:</strong> Ruta corta (5 km) + respiración guiada</li>
-      <li><strong>Día 5:</strong> Piernas funcionales sin carga</li>
-      <li><strong>Día 6:</strong> Caminata activa con ruta visual</li>
-      <li><strong>Día 7:</strong> Respiración profunda + revisión general</li>
-    </ul>
-  </div>
+    const rutinaBajoPeso = [
+      "Día 1: Full body con peso corporal (sentadillas, flexiones, abdominales)",
+      "Día 2: Entrenamiento de fuerza con mancuernas o botellas de agua",
+      "Día 3: Cardio suave (20-30 min) + estiramientos",
+      "Día 4: Circuito de fuerza (3 vueltas: 10 sentadillas, 10 flexiones, 30 seg plancha)",
+      "Día 5: Core (plancha, crunches, elevaciones de piernas)",
+      "Día 6: Caminata rápida 30 min + movilidad",
+      "Día 7: Descanso activo (yoga suave o estiramientos)"
+    ];
 
+    const rutinaPesoNormal = [
+      "Día 1: Cardio 30 min + circuito de fuerza (flexiones, zancadas)",
+      "Día 2: Rutina HIIT 20 min + abdominales",
+      "Día 3: Caminata rápida o bici 45 min",
+      "Día 4: Full body funcional (sentadillas + press + plancha)",
+      "Día 5: Core + movilidad articular",
+      "Día 6: Trote 30 min + estiramientos",
+      "Día 7: Yoga o descanso activo"
+    ];
+
+    const rutinaSobrepeso = [
+      "Día 1: Caminata o bicicleta suave 40 min",
+      "Día 2: Circuito suave (sentadillas sin peso, paso alto, plancha de rodillas)",
+      "Día 3: Cardio acuático o elíptica 30 min",
+      "Día 4: Fuerza básica con bandas o peso corporal",
+      "Día 5: Estiramientos largos + core ligero",
+      "Día 6: Caminata en pendiente o bici estática 30 min",
+      "Día 7: Descanso o yoga suave"
+    ];
+
+    let tituloIMC = "";
+    let rutina = [];
+
+    if (imc < 18.5) {
+      tituloIMC = "Objetivo: Subir de peso y ganar fuerza (IMC Bajo)";
+      rutina = rutinaBajoPeso;
+    } else if (imc >= 18.5 && imc < 25) {
+      tituloIMC = "Objetivo: Mantener condición física (IMC Normal)";
+      rutina = rutinaPesoNormal;
+    } else {
+      tituloIMC = "Objetivo: Bajar de peso y mejorar resistencia (IMC Alto)";
+      rutina = rutinaSobrepeso;
+    }
+
+    document.getElementById("tituloIMC").innerText = tituloIMC;
+
+    const contenedor = document.getElementById("rutina");
+    rutina.forEach((dia, i) => {
+      const div = document.createElement("div");
+      div.className = "dia";
+      div.innerText = dia;
+      contenedor.appendChild(div);
+    });
+  </script>
 </body>
 </html>
