@@ -1,98 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<title>Entrenamiento Simple</title>
+  <meta charset="UTF-8">
+  <title>Planes de Entrenamiento Personalizados</title>
+  <style>
+    body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+    h1, h2 { color: #333; }
+    .disciplina {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .imc-bajo { color: #0077cc; }
+    .imc-medio { color: #00aa66; }
+    .imc-alto { color: #cc3300; }
+  </style>
 </head>
 <body>
+  <h1>💪 Planes de Entrenamiento por Disciplina y IMC</h1>
 
-<h1>Selecciona tu plan de entrenamiento</h1>
+  <div class="disciplina">
+    <h2>🏃 Atletismo</h2>
+    <p class="imc-bajo">Carreras explosivas, técnica de zancada, coordinación motora.</p>
+    <p class="imc-medio">Intervalos, resistencia progresiva, entrenamiento de pisada.</p>
+    <p class="imc-alto">Marchas controladas, fuerza básica, trabajo de postura.</p>
+  </div>
 
-<label for="deporte">Deporte:</label>
-<select id="deporte">
-  <option value="MTB">MTB</option>
-  <option value="Ruta">Ruta</option>
-  <!-- Agrega más deportes si quieres -->
-</select>
+  <div class="disciplina">
+    <h2>🥊 Boxeo</h2>
+    <p class="imc-bajo">Sombras rápidas, desplazamientos laterales, técnica de golpeo.</p>
+    <p class="imc-medio">Combinaciones, trabajo de saco, cardio intenso.</p>
+    <p class="imc-alto">Golpes suaves, movilidad articular, entrenamiento defensivo.</p>
+  </div>
 
-<label for="disciplina">Disciplina:</label>
-<select id="disciplina"></select>
+  <div class="disciplina">
+    <h2>🏋️ CrossFit</h2>
+    <p class="imc-bajo">Movimientos gimnásticos, escalado de intensidad, ejercicios sin carga.</p>
+    <p class="imc-medio">WODs estructurados, levantamientos moderados, resistencia mixta.</p>
+    <p class="imc-alto">Ejercicios funcionales, control del peso, movilidad y elasticidad.</p>
+  </div>
 
-<label for="imc">IMC:</label>
-<select id="imc">
-  <option value="bajo_peso">Bajo peso</option>
-  <option value="normal">Normal</option>
-  <option value="sobrepeso">Sobrepeso</option>
-</select>
+  <div class="disciplina">
+    <h2>🎾 Tenis</h2>
+    <p class="imc-bajo">Golpes técnicos, velocidad de reacción, trabajo de muñeca.</p>
+    <p class="imc-medio">Desplazamientos rápidos, simulaciones de juego, trabajo táctico.</p>
+    <p class="imc-alto">Movimientos suaves, precisión de golpe, estiramientos activos.</p>
+  </div>
 
-<button onclick="mostrarPlan()">Mostrar Plan</button>
+  <div class="disciplina">
+    <h2>🏀 Básquetbol</h2>
+    <p class="imc-bajo">Tiros estáticos, pases, técnica individual.</p>
+    <p class="imc-medio">Entrenamiento táctico, desplazamientos en cancha, saltos moderados.</p>
+    <p class="imc-alto">Lanzamientos sin impacto, trabajo grupal, movilidad controlada.</p>
+  </div>
 
-<div id="resultado"></div>
+  <div class="disciplina">
+    <h2>🤸 Gimnasia</h2>
+    <p class="imc-bajo">Movimientos acrobáticos, fuerza corporal, equilibrio.</p>
+    <p class="imc-medio">Rondas dinámicas, flexibilidad activa, control postural.</p>
+    <p class="imc-alto">Ejercicios de piso, corrección de postura, respiración consciente.</p>
+  </div>
 
-<script>
-const planesEntrenamiento = {
-  MTB: {
-    XC: {
-      bajo_peso: ["Día 1: Calentamiento 15 min...", "Día 2: Entreno de fuerza...", "Día 3: Descanso activo...", "Día 4: Rodillo...", "Día 5: Técnica...", "Día 6: Resistencia...", "Día 7: Descanso."],
-      normal: ["Día 1: Ruta 1h...", "Día 2: Gimnasio...", "Día 3: Natación...", "Día 4: Intervalos...", "Día 5: Técnica...", "Día 6: Ruta larga...", "Día 7: Descanso."],
-      sobrepeso: ["Día 1: Caminata 30 min...", "Día 2: Entreno ligero...", "Día 3: Yoga...", "Día 4: Rodillo suave...", "Día 5: Técnica básica...", "Día 6: Resistencia baja...", "Día 7: Descanso."],
-    },
-    All_Mountain: {
-      bajo_peso: [],
-      normal: [],
-      sobrepeso: []
-    }
-    // Puedes agregar más disciplinas aquí
-  },
-  Ruta: {
-    Contrarreloj: {
-      bajo_peso: [],
-      normal: [],
-      sobrepeso: []
-    }
-    // Agrega más disciplinas
-  }
-  // Agrega más deportes
-};
+  <div class="disciplina">
+    <h2>🏋️‍♀️ Levantamiento de Pesas</h2>
+    <p class="imc-bajo">Técnica con barra vacía, posicionamiento, control del cuerpo.</p>
+    <p class="imc-medio">Programas estructurados, fuerza explosiva, control neural.</p>
+    <p class="imc-alto">Peso moderado, rangos cortos, adaptaciones seguras.</p>
+  </div>
 
-const disciplinasPorDeporte = {
-  MTB: ["XC", "All_Mountain"],
-  Ruta: ["Contrarreloj"]
-  // Agrega más deportes y sus disciplinas aquí
-};
+  <div class="disciplina">
+    <h2>🥋 Karate</h2>
+    <p class="imc-bajo">Katas dinámicas, técnica de pierna, respiración activa.</p>
+    <p class="imc-medio">Combinaciones, combate técnico, fuerza específica.</p>
+    <p class="imc-alto">Movimientos suaves, control postural, katas básicos.</p>
+  </div>
 
-const disciplinaSelect = document.getElementById("disciplina");
-const deporteSelect = document.getElementById("deporte");
+  <div class="disciplina">
+    <h2>⚽ Fútbol</h2>
+    <p class="imc-bajo">Dribbling, velocidad, técnica sin contacto.</p>
+    <p class="imc-medio">Juego posicional, cardio en cancha, coordinación grupal.</p>
+    <p class="imc-alto">Ejercicios defensivos, resistencia ligera, precisión de pases.</p>
+  </div>
 
-function actualizarDisciplinas() {
-  const deporte = deporteSelect.value;
-  disciplinaSelect.innerHTML = "";
-  disciplinasPorDeporte[deporte].forEach(d => {
-    const option = document.createElement("option");
-    option.value = d;
-    option.textContent = d.replace(/_/g, " ");
-    disciplinaSelect.appendChild(option);
-  });
-}
+  <div class="disciplina">
+    <h2>🚴 Ciclismo</h2>
+    <p class="imc-bajo">Cadencias rápidas, trabajo en colinas, técnica postural.</p>
+    <p class="imc-medio">Entrenamientos mixtos, rutas largas, intervalos.</p>
+    <p class="imc-alto">Rodadas suaves, recuperación activa, control del ritmo.</p>
+  </div>
 
-deporteSelect.addEventListener("change", actualizarDisciplinas);
-window.onload = actualizarDisciplinas;
-
-function mostrarPlan() {
-  const deporte = deporteSelect.value;
-  const disciplina = disciplinaSelect.value;
-  const imc = document.getElementById("imc").value;
-
-  const plan = planesEntrenamiento[deporte]?.[disciplina]?.[imc];
-  const resultadoDiv = document.getElementById("resultado");
-
-  if (!plan || plan.length === 0) {
-    resultadoDiv.textContent = "Plan no disponible para esta combinación.";
-  } else {
-    resultadoDiv.innerHTML = plan.map((d, i) => `<p><b>Día ${i + 1}:</b> ${d}</p>`).join("");
-  }
-}
-</script>
+  <div class="disciplina">
+    <h2>🏊 Natación</h2>
+    <p class="imc-bajo">Crol corto, técnica de brazada, movilidad.</p>
+    <p class="imc-medio">Series mixtas, trabajo de pulmones, estilo mariposa.</p>
+    <p class="imc-alto">Estilo espalda, flotación activa, desplazamientos largos.</p>
+  </div>
 
 </body>
 </html>
